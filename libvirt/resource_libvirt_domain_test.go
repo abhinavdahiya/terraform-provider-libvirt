@@ -1277,7 +1277,7 @@ EOF
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckLibvirtDomainExists("libvirt_domain."+randomDomainName, &domain),
 					testAccCheckLibvirtDomainDescription(&domain, func(domainDef libvirtxml.Domain) error {
-						if  domainDef.Devices.Interfaces[0].Model.Type != "e1000" {
+						if domainDef.Devices.Interfaces[0].Model.Type != "e1000" {
 							return fmt.Errorf("Expecting XSLT to tranform network model to e1000")
 						}
 						return nil
@@ -1332,7 +1332,7 @@ EOF
 		CheckDestroy: testAccCheckLibvirtDomainDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: config,
+				Config:             config,
 				ExpectNonEmptyPlan: true,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckLibvirtDomainExists("libvirt_domain."+randomDomainName, &domain),
