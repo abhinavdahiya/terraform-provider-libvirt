@@ -412,13 +412,15 @@ func TestAccLibvirtDomain_KernelInitrdCmdline(t *testing.T) {
 		name   = "terraform-test-domain"
 		kernel = "${libvirt_volume.kernel.id}"
 		initrd = "${libvirt_volume.initrd.id}"
-		cmdline {
-			foo = 1
-			bar = "bye"
-		}
-		cmdline {
-			foo = 2
-		}
+		cmdline = [
+			{
+				foo = 1
+				bar = "bye"
+			},
+			{
+				foo = 2
+			}
+		]
 	}`, randomDomainName)
 
 	resource.Test(t, resource.TestCase{
@@ -458,10 +460,10 @@ func TestAccLibvirtDomain_NetworkInterface(t *testing.T) {
 
 	resource "libvirt_domain" "%s" {
 		name              = "%s"
-		network_interface = {
+		network_interface {
 			network_name = "default"
 		}
-		network_interface = {
+		network_interface {
 			network_name   = "default"
 			mac            = "52:54:00:A9:F5:17"
 			wait_for_lease = true
@@ -681,7 +683,7 @@ func TestAccLibvirtDomain_Cpu(t *testing.T) {
 	var config = fmt.Sprintf(`
 	resource "libvirt_domain" "%s" {
 		name = "%s"
-		cpu {
+		cpu = {
 			mode = "custom"
 		}
 	}`, randomDomainName, randomDomainName)
@@ -1429,7 +1431,7 @@ func TestAccLibvirtDomain_XSLT_UnsupportedAttribute(t *testing.T) {
 
 	resource "libvirt_domain" "%s" {
 	  name = "%s"
-	  network_interface = {
+	  network_interface {
 	    network_name = "default"
 	  }
       xml {
@@ -1493,7 +1495,7 @@ func TestAccLibvirtDomain_XSLT_SupportedAttribute(t *testing.T) {
 
 	resource "libvirt_domain" "%s" {
 	  name = "%s"
-	  network_interface = {
+	  network_interface {
 	    network_name = "default"
 	  }
       xml {
@@ -1551,7 +1553,7 @@ func TestAccLibvirtDomain_XSLT_Whitespace(t *testing.T) {
 
 	resource "libvirt_domain" "%s" {
 	  name = "%s"
-	  network_interface = {
+	  network_interface {
 	    network_name = "default"
 	  }
       xml {
@@ -1584,7 +1586,7 @@ EOF
 
 	resource "libvirt_domain" "%s" {
 	  name = "%s"
-	  network_interface = {
+	  network_interface {
 	    network_name = "default"
 	  }
       xml {

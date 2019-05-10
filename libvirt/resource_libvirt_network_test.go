@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 	"github.com/libvirt/libvirt-go"
-	"github.com/libvirt/libvirt-go-xml"
+	libvirtxml "github.com/libvirt/libvirt-go-xml"
 )
 
 func TestAccLibvirtNetwork_Addresses(t *testing.T) {
@@ -134,18 +134,16 @@ func TestAccLibvirtNetwork_DNSForwarders(t *testing.T) {
 					domain    = "k8s.local"
 					addresses = ["10.17.3.0/24"]
 					dns {
-						forwarders = [
-						  {
-						    address = "8.8.8.8",
-					          },
-						  {
-						    address = "10.10.0.67",
-						    domain = "my.domain.com",
-						  },
-						  {
-						    domain = "hello.com",
-						  },
-						]
+						forwarders {
+						    address = "8.8.8.8"
+					    }
+						forwarders {
+						    address = "10.10.0.67"
+						    domain = "my.domain.com"
+						}
+						forwarders {
+						    domain = "hello.com"
+						}
 					}
 				}`, randomNetworkResource, randomNetworkName),
 				Check: resource.ComposeTestCheckFunc(
@@ -187,20 +185,18 @@ func TestAccLibvirtNetwork_DNSHosts(t *testing.T) {
 					domain    = "k8s.local"
 					addresses = ["10.17.3.0/24"]
 					dns {
-						hosts = [
-						  {
-							  hostname = "myhost1",
-							  ip = "1.1.1.1",
-						  },
-						  {
-							  hostname = "myhost1",
-							  ip = "1.1.1.2",
-						  },
-						  {
-							  hostname = "myhost2",
-							  ip = "1.1.1.1",
-						  },
-						]
+						host {
+							hostname = "myhost1"
+							ip = "1.1.1.1"
+						}
+						host {
+							hostname = "myhost1"
+							ip = "1.1.1.2"
+						}
+						host {
+							hostname = "myhost2"
+							ip = "1.1.1.1"
+						}
 					}
 				}`, randomNetworkResource, randomNetworkName),
 				Check: resource.ComposeTestCheckFunc(
@@ -448,7 +444,7 @@ func TestAccLibvirtNetwork_StaticRoutes(t *testing.T) {
 
 	randomNetworkName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	config := fmt.Sprintf(`
-					resource "libvirt_network" "%s" {
+				resource "libvirt_network" "%s" {
 					name      = "%s"
 					mode      = "route"
 					domain    = "k8s.local"
@@ -456,12 +452,11 @@ func TestAccLibvirtNetwork_StaticRoutes(t *testing.T) {
 					dhcp {
 						enabled = false
 					}
-					routes = [
-						{
-							cidr = "10.18.0.0/16"
-							gateway = "10.17.3.2"
-						},
-					]}`,
+					routes {
+						cidr = "10.18.0.0/16"
+						gateway = "10.17.3.2"
+					}
+				}`,
 		randomNetworkName, randomNetworkName)
 
 	resource.Test(t, resource.TestCase{
