@@ -18,8 +18,8 @@ import (
 
 func TestAccLibvirtDomain_Basic(t *testing.T) {
 	var domain libvirt.Domain
-	randomResourceName := acctest.RandString(10)
-	randomDomainName := acctest.RandString(10)
+	randomResourceName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
@@ -46,8 +46,8 @@ func TestAccLibvirtDomain_Basic(t *testing.T) {
 
 func TestAccLibvirtDomain_Detailed(t *testing.T) {
 	var domain libvirt.Domain
-	randomResourceName := acctest.RandString(10)
-	randomDomainName := acctest.RandString(10)
+	randomResourceName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
@@ -77,8 +77,8 @@ func TestAccLibvirtDomain_Detailed(t *testing.T) {
 func TestAccLibvirtDomain_Volume(t *testing.T) {
 	var domain libvirt.Domain
 	var volume libvirt.StorageVol
-	randomVolumeName := acctest.RandString(10)
-	randomDomainName := acctest.RandString(10)
+	randomVolumeName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	var configVolAttached = fmt.Sprintf(`
 	resource "libvirt_volume" "%s" {
 		name = "%s"
@@ -122,9 +122,9 @@ func TestAccLibvirtDomain_Volume(t *testing.T) {
 func TestAccLibvirtDomain_VolumeTwoDisks(t *testing.T) {
 	var domain libvirt.Domain
 	var volume libvirt.StorageVol
-	randomVolumeName := acctest.RandString(10)
+	randomVolumeName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	randomVolumeName2 := acctest.RandString(9)
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	var configVolAttached = fmt.Sprintf(`
 	resource "libvirt_volume" "%s" {
@@ -181,9 +181,9 @@ func TestAccLibvirtDomain_VolumeDriver(t *testing.T) {
 	var domain libvirt.Domain
 	var volumeRaw libvirt.StorageVol
 	var volumeQCOW2 libvirt.StorageVol
-	randomVolumeQCOW2 := acctest.RandString(10)
-	randomVolumeRaw := acctest.RandString(9)
-	randomDomainName := acctest.RandString(10)
+	randomVolumeQCOW2 := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomVolumeRaw := acctest.RandStringFromCharSet(9, acctest.CharSetAlpha)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	var config = fmt.Sprintf(`
 	resource "libvirt_volume" "%s" {
@@ -235,8 +235,8 @@ func TestAccLibvirtDomain_VolumeDriver(t *testing.T) {
 
 func TestAccLibvirtDomain_ScsiDisk(t *testing.T) {
 	var domain libvirt.Domain
-	randomVolumeName := acctest.RandString(10)
-	randomDomainName := acctest.RandString(10)
+	randomVolumeName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	var configScsi = fmt.Sprintf(`
 	resource "libvirt_volume" "%s" {
 		name = "%s"
@@ -270,7 +270,7 @@ func TestAccLibvirtDomain_ScsiDisk(t *testing.T) {
 
 func TestAccLibvirtDomain_URLDisk(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	fws := fileWebServer{}
 	if err := fws.Start(); err != nil {
 		t.Fatal(err)
@@ -319,7 +319,7 @@ func TestAccLibvirtDomain_URLDisk(t *testing.T) {
 
 func TestAccLibvirtDomain_MultiISODisks(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	isoPath, err := filepath.Abs("testdata/tcl.iso")
 	if err != nil {
@@ -391,7 +391,7 @@ func TestAccLibvirtDomain_KernelInitrdCmdline(t *testing.T) {
 	var domain libvirt.Domain
 	var kernel libvirt.StorageVol
 	var initrd libvirt.StorageVol
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	var config = fmt.Sprintf(`
 	resource "libvirt_volume" "kernel" {
@@ -442,8 +442,8 @@ func TestAccLibvirtDomain_KernelInitrdCmdline(t *testing.T) {
 
 func TestAccLibvirtDomain_NetworkInterface(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
-	randomNetworkName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomNetworkName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	currentDir, err := os.Getwd()
 	if err != nil {
@@ -493,8 +493,8 @@ func TestAccLibvirtDomain_NetworkInterface(t *testing.T) {
 func TestAccLibvirtDomain_CheckDHCPEntries(t *testing.T) {
 	var domain libvirt.Domain
 	var network libvirt.Network
-	randomDomainName := acctest.RandString(10)
-	randomNetworkName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomNetworkName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	var configWithDomain = fmt.Sprintf(`
 	    resource "libvirt_network" "%s" {
@@ -555,8 +555,8 @@ func TestAccLibvirtDomain_CheckDHCPEntries(t *testing.T) {
 func TestAccLibvirtDomain_Graphics(t *testing.T) {
 	var domain libvirt.Domain
 
-	randomDomainName := acctest.RandString(10)
-	randomVolumeName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomVolumeName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	var config = fmt.Sprintf(`
 	resource "libvirt_volume" "%s" {
 		name = "%s"
@@ -632,8 +632,8 @@ func TestAccLibvirtDomain_Graphics(t *testing.T) {
 func TestAccLibvirtDomain_IgnitionObject(t *testing.T) {
 	var domain libvirt.Domain
 	var volume libvirt.StorageVol
-	randomDomainName := acctest.RandString(10)
-	randomIgnitionName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomIgnitionName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	var config = fmt.Sprintf(`
 	data "ignition_systemd_unit" "acceptance-test-systemd" {
 		name    = "example.service"
@@ -676,7 +676,7 @@ func TestAccLibvirtDomain_IgnitionObject(t *testing.T) {
 
 func TestAccLibvirtDomain_Cpu(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	var config = fmt.Sprintf(`
 	resource "libvirt_domain" "%s" {
@@ -705,7 +705,7 @@ func TestAccLibvirtDomain_Cpu(t *testing.T) {
 
 func TestAccLibvirtDomain_Video(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	var config = fmt.Sprintf(`
 	resource "libvirt_domain" "%s" {
@@ -734,7 +734,7 @@ func TestAccLibvirtDomain_Video(t *testing.T) {
 
 func TestAccLibvirtDomain_Autostart(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	var autostartTrue = fmt.Sprintf(`
 	resource "libvirt_domain" "%s" {
 		name      = "%s"
@@ -772,7 +772,7 @@ func TestAccLibvirtDomain_Autostart(t *testing.T) {
 
 func TestAccLibvirtDomain_Filesystems(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	var config = fmt.Sprintf(`
 	resource "libvirt_domain" "%s" {
@@ -818,7 +818,7 @@ func TestAccLibvirtDomain_Filesystems(t *testing.T) {
 
 func TestAccLibvirtDomain_Consoles(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	var config = fmt.Sprintf(`
 	resource "libvirt_domain" "%s" {
 		name = "%s"
@@ -1098,7 +1098,7 @@ func TestAccLibvirtDomainFirmware(t *testing.T) {
 
 func subtestAccLibvirtDomainFirmwareNoTemplate(t *testing.T, NVRAMPath string, firmware string) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	var config = fmt.Sprintf(`
 	resource "libvirt_domain" "%s" {
 		name     = "terraform-test-firmware-no-template"
@@ -1134,7 +1134,7 @@ func subtestAccLibvirtDomainFirmwareTemplate(t *testing.T, NVRAMPath string, fir
 	if err != nil {
 		t.Fatal(err)
 	}
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	var domain libvirt.Domain
 	var config = fmt.Sprintf(`
 	resource "libvirt_domain" "%s" {
@@ -1171,7 +1171,7 @@ func subtestAccLibvirtDomainFirmwareTemplate(t *testing.T, NVRAMPath string, fir
 
 func TestAccLibvirtDomain_MachineType(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	// Using machine type of pc as this is earliest QEMU target
 	// and so most likely to be available
 	var config = fmt.Sprintf(`
@@ -1197,7 +1197,7 @@ func TestAccLibvirtDomain_MachineType(t *testing.T) {
 
 func TestAccLibvirtDomain_ArchType(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	// Using i686 as architecture in case anyone running tests on an i686 only host
 	var config = fmt.Sprintf(`
 	resource "libvirt_domain" "%s" {
@@ -1258,8 +1258,8 @@ func testAccCheckLibvirtNetworkExists(name string, network *libvirt.Network) res
 func TestAccLibvirtDomain_ShutoffDomain(t *testing.T) {
 	var domain libvirt.Domain
 	var volume libvirt.StorageVol
-	randomDomainName := acctest.RandString(10)
-	randomVolumeName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomVolumeName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
@@ -1316,7 +1316,7 @@ func TestAccLibvirtDomain_ShutoffMultiDomainsRunning(t *testing.T) {
 }
 
 func TestAccLibvirtDomain_CaseInsensitiveAttrs_MAC(t *testing.T) {
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 	var config = fmt.Sprintf(`
 	resource "libvirt_domain" "%s" {
 		name      = "%s"
@@ -1384,7 +1384,7 @@ func testAccCheckLibvirtDomainStateEqual(name string, domain *libvirt.Domain, ex
 
 func TestAccLibvirtDomain_Import(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
@@ -1418,8 +1418,8 @@ func TestAccLibvirtDomain_Import(t *testing.T) {
 
 func TestAccLibvirtDomain_XSLT_UnsupportedAttribute(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
-	randomNetworkName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomNetworkName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	var config = fmt.Sprintf(`
 	resource "libvirt_network" "%s" {
@@ -1482,8 +1482,8 @@ EOF
 // schema attributes
 func TestAccLibvirtDomain_XSLT_SupportedAttribute(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
-	randomNetworkName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomNetworkName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	var config = fmt.Sprintf(`
 	resource "libvirt_network" "%s" {
@@ -1540,8 +1540,8 @@ EOF
 // as the supress diff function should take care of seeing they are equivalent
 func TestAccLibvirtDomain_XSLT_Whitespace(t *testing.T) {
 	var domain libvirt.Domain
-	randomDomainName := acctest.RandString(10)
-	randomNetworkName := acctest.RandString(10)
+	randomDomainName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
+	randomNetworkName := acctest.RandStringFromCharSet(10, acctest.CharSetAlpha)
 
 	var config = fmt.Sprintf(`
 	resource "libvirt_network" "%s" {
